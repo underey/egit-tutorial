@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<persistence xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd"
+  version="2.0" xmlns="http://java.sun.com/xml/ns/persistence">
+<persistence-unit name="restDB3" 
+		transaction-type="RESOURCE_LOCAL">
+	<provider>
+		org.eclipse.persistence.jpa.PersistenceProvider
+	</provider>
+    <class>edu.bionic.sverkunov.com.DAODB3.classes.Customer</class>
+    <class>edu.bionic.sverkunov.com.DAODB3.classes.Orderr</class>
+    <class>edu.bionic.sverkunov.com.DAODB3.classes.Menusection</class>
+    <class>edu.bionic.sverkunov.com.DAODB3.classes.Dish</class>
+    <class>edu.bionic.sverkunov.com.DAODB3.classes.Orderrmenuitem</class>
+    <class>edu.bionic.sverkunov.com.DAODB3.classes.Accesslevel</class>
+    <class>edu.bionic.sverkunov.com.DAODB3.classes.Staff</class>
+    <class>edu.bionic.sverkunov.com.DAODB3.classes.Staffrole</class>
+    <class>edu.bionic.sverkunov.com.DAODB3.classes.Stafforderr</class>
+    <class>edu.bionic.sverkunov.com.DAODB3.classes.Restaurant</class>
+    
+    <properties>
+          <property name="javax.persistence.jdbc.driver" 
+              value="org.apache.derby.jdbc.EmbeddedDriver" />
+  <property name="javax.persistence.jdbc.url"
+                value="jdbc:derby:C:\Users\АИС\Desktop\bionic\presentation_enterprise\enterprise_bionic_code\DB4;create=true" />
+      	<property name="eclipselink.ddl-generation.output-mode"  value="database" />
+	   </properties>
+ 	</persistence-unit>
+</persistence> 
+  

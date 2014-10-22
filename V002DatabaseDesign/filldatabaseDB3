@@ -1,0 +1,49 @@
+insert into ACCESSLEVEL(level_of_access) values(0);
+insert into ACCESSLEVEL(level_of_access) values(100);
+insert into ACCESSLEVEL(level_of_access) values(200);
+insert into ACCESSLEVEL(level_of_access) values(300);
+insert into ACCESSLEVEL(level_of_access) values(400);
+insert into ACCESSLEVEL(level_of_access) values(500);
+insert into ACCESSLEVEL(level_of_access) values(1000);
+
+
+DELETE FROM DISH;
+MENUSECTION_DISH_FK
+
+
+ALTER TABLE MENUSECTION
+DROP PRIMARY KEY;
+
+ALTER TABLE DISH
+ADD FOREIGN KEY (menusection_id) 
+REFERENCES MENUSECTION(id);
+
+ALTER TABLE menusection DROP COLUMN MENUSECTION_ID;
+
+ALTER TABLE dish drop COLUMN MENUSECTION_ID;
+
+ALTER TABLE dish add COLUMN MENUSECTION_ID int;
+
+
+insert into MENUSECTION(name) values('Sauces');
+insert into MENUSECTION(name) values('Additionally');
+insert into MENUSECTION(name) values('BBQ');
+insert into MENUSECTION(name) values('Beverages');
+insert into MENUSECTION(name) values('Dessert');
+insert into MENUSECTION(name) values('Entrees');
+insert into MENUSECTION(name) values('Salads');
+insert into MENUSECTION(name) values('Seafood');
+insert into MENUSECTION(name) values('Sidedish');
+
+ALTER TABLE CUSTOMER ADD isactivated smallint DEFAULT 1 NOT NULL;
+ALTER TABLE STAFF ADD isactivated smallint DEFAULT 1 NOT NULL;
+
+ALTER TABLE CUSTOMER drop column isactivated;
+ALTER TABLE STAFF drop column isactivated;
+
+ALTER TABLE DISH add column isactivated smallint DEFAULT 1 NOT NULL;
+
+
+alter table orderrmenuitem drop column orderr_id;
+alter table orderrmenuitem add column orderr_id int;
+alter table ORDERRMENUITEM add constraint orderr_orderrmenuitem_fk foreign key(orderr_id) references ORDERR(id);

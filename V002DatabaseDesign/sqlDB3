@@ -1,0 +1,112 @@
+create table restaurant(
+id int not null generated always as identity,
+name varchar(40) not null,
+phone_number varchar(30) not null,
+email varchar(40) not null,
+delivery_time varchar(40) not null,
+price_range varchar(40) not null,
+primary key(id)
+);
+
+create table customer(
+id int not null generated always as identity,
+name varchar(30) not null,
+surname varchar(30) not null,
+birthday date not null,
+city varchar(30),
+street varchar(40),
+building varchar(10),
+app varchar(10),
+email varchar(40) not null,
+payment_info varchar(30),
+phone varchar(30) not null,
+login varchar(30) not null,
+password varchar(40) not null,
+access_id int constraint customer_access_fk references accesslevel default 0 not null,
+isactivated smallint default 1 NOT NULL,
+primary key(id)
+);
+
+create table orderr(
+id int not null generated always as identity,
+status varchar(30) not null default 'undone',
+date_time timestamp not null,
+customer_id int constraint customer_orderr_fk references customer,
+primary key(id)
+);
+
+create table orderrmenuitem(
+id int not null generated always as identity,
+status varchar(30) not null default 'undone',
+date_time timestamp not null;
+price decimal(7, 2) not null,
+orderr_id int constraint orderr_ordmenuitem_fk references orderr,
+dish_id int constraint dish_ordmenuitme_fk references dish,
+primary key(id)
+);
+
+create table menusection(
+id int not null generated always as identity,
+name varchar(30) not null,
+description varchar(2000),
+primary key(id)
+);
+
+create table dish(
+id int not null generated always as identity,
+name varchar(60) not null,
+weight varchar(10),
+price decimal(7, 2) not null,
+description varchar(500),
+is_kitchen_made smallint not null, 
+menusection_id int constraint menusection_dish_fk references menusection,
+isactivated smallint default 1 not null,
+primary key(id)
+);
+
+create table staffrole(
+id int not null generated always as identity,
+role_name varchar(60) not null,
+primary key(id)
+);
+
+create table staff(
+id int not null generated always as identity,
+name varchar(30) not null,
+surname varchar(40) not null,
+login varchar(40) not null,
+password varchar (50) not null,
+email varchar(50) not null,
+role_id int constraint staff_role_fk references staffrole,
+access_id int constraint staff_access_fk references accesslevel,
+isactivated smallint default 1 not null,
+primary key(id)
+);
+
+create table accesslevel(
+id int not null generated always as identity,
+level_of_access int not null,
+primary key(id)
+);
+
+create table stafforder(
+id int not null generated always as identity,
+staff_id int constraint stafforder_staff_pk references staff,
+orderr_id int constraint stafforder_orderr_pk references orderr,
+primary key(id)
+);
+
+insert into orderr(status, date_time, customer_id) values('delivered', '2014-10-04', 3);
+
+
+insert into restaurant(name, phone_number, email, delivery_time, price_range) 
+values('Alfama Patio', '0637177999', 'ap@gmail.com', '09.00 - 24.00', '50 -100 $');
+
+insert into customer(name, surname, birthday, city, street, building, app, email, payment_info, phone, login, password, security_question, security_answer, restaurantid) 
+values('Igor', 'Medincov', '1992-04-23', 'Kiev', 'Bagana', '13', '303', 'iameatsleepdrink@gmail.com', '9999000099990000', '0635687321', 'iror1', '12345', 'what is your name?', 'Igor', 1);
+
+insert into customer(name, surname, birthday, city, street, building, app, email, payment_info, phone, login, password, security_question, security_answer, restaurantid) 
+values('Yan', 'Michelkis', '1992-03-25', 'Kiev', 'Lesnoy Prospekt', '24', '68', 'yan.mikhelkis@gmail.com', '0000999900009999', '0632567801', 'yan1', '23456', 'what is your name?', 'Yan', 1);
+
+insert into customer(name, surname, birthday, city, street, building, app, email, payment_info, phone, login, password, security_question, security_answer, restaurantid) 
+values('Nikita', 'Nikonov', '1992-01-04', 'Kiev', 'Urlovska', '6', '89', 'nikita.nikonov@gmail.com', '7777000077770000', '0664216783', 'nikita1', '34567', 'what is your name?', 'Nikita', 1);

@@ -1,0 +1,163 @@
+create table restaurant(
+id int not null generated always as identity,
+name varchar(40) not null,
+phone_number varchar(30) not null,
+email varchar(40) not null,
+delivery_time varchar(40) not null,
+price_range varchar(40) not null,
+primary key(id)
+);
+
+create table customer(
+id int not null generated always as identity,
+name varchar(30) not null,
+surname varchar(30) not null,
+birthday date not null,
+city varchar(30),
+street varchar(40),
+building varchar(10),
+app varchar(10),
+email varchar(40) not null,
+payment_info varchar(30),
+phone varchar(30) not null,
+login varchar(30) not null,
+password varchar(40) not null,
+access_id int constraint customer_access_fk references accesslevel default 1 not null,
+isactivated smallint default 1 NOT NULL,
+primary key(id)
+);
+
+create table orderr(
+id int not null generated always as identity,
+status varchar(30) not null default 'undone',
+date_time timestamp not null,
+customer_id int constraint customer_orderr_fk references customer,
+primary key(id)
+);
+
+create table orderrmenuitem(
+id int not null generated always as identity,
+status varchar(30) not null default 'undone',
+date_time timestamp not null,
+price decimal(7, 2) not null,
+orderr_id int constraint orderr_ordmenuitem_fk references orderr,
+dish_id int constraint dish_ordmenuitme_fk references dish,
+primary key(id)
+);
+
+create table menusection(
+id int not null generated always as identity,
+name varchar(30) not null,
+description varchar(2000),
+primary key(id)
+);
+
+create table dish(
+id int not null generated always as identity,
+name varchar(60) not null,
+weight varchar(10),
+price decimal(7, 2) not null,
+description varchar(500),
+is_kitchen_made smallint not null, 
+menusection_id int constraint menusection_dish_fk references menusection,
+isactivated smallint default 1 not null,
+primary key(id)
+);
+
+create table staffrole(
+id int not null generated always as identity,
+role_name varchar(60) not null,
+primary key(id)
+);
+
+create table staff(
+id int not null generated always as identity,
+name varchar(30) not null,
+surname varchar(40) not null,
+login varchar(40) not null,
+password varchar (50) not null,
+email varchar(50) not null,
+role_id int constraint staff_role_fk references staffrole,
+access_id int constraint staff_access_fk references accesslevel,
+isactivated smallint default 1 not null,
+primary key(id)
+);
+
+create table accesslevel(
+id int not null generated always as identity,
+level_of_access int not null,
+primary key(id)
+);
+
+create table stafforder(
+id int not null generated always as identity,
+staff_id int constraint stafforder_staff_pk references staff,
+orderr_id int constraint stafforder_orderr_pk references orderr,
+primary key(id)
+);
+
+
+insert into MENUSECTION(name) values('Sauces');
+insert into MENUSECTION(name) values('Additionally');
+insert into MENUSECTION(name) values('BBQ');
+insert into MENUSECTION(name) values('Beverages');
+insert into MENUSECTION(name) values('Dessert');
+insert into MENUSECTION(name) values('Entrees');
+insert into MENUSECTION(name) values('Salads');
+insert into MENUSECTION(name) values('Seafood');
+insert into MENUSECTION(name) values('Sidedish');
+
+insert into ACCESSLEVEL(level_of_access) values(0);
+insert into ACCESSLEVEL(level_of_access) values(100);
+insert into ACCESSLEVEL(level_of_access) values(200);
+insert into ACCESSLEVEL(level_of_access) values(300);
+insert into ACCESSLEVEL(level_of_access) values(400);
+insert into ACCESSLEVEL(level_of_access) values(500);
+insert into ACCESSLEVEL(level_of_access) values(1000);
+
+insert into restaurant(name, phone_number, email, delivery_time, price_range) 
+values('Alfama Patio', '+380637177999', 'ap@gmail.com', '09.00 - 23.00', '50 -100 $');
+
+insert into customer(name, surname, birthday, city, street, building, app, email, payment_info, phone, login, password, access_id, isactivated) 
+values('Igor', 'Medincov', '1992-04-23', 'Kiev', 'Bagana', '13', '303', 'iameatsleepdrink@gmail.com', '9999000099990000', '0635687321', 'iror1', '*****', 1, 1);
+insert into customer(name, surname, birthday, city, street, building, app, email, payment_info, phone, login, password, access_id, isactivated) 
+values('Yan', 'Michelkis', '1992-03-25', 'Kiev', 'Lesnoy Prospekt', '24', '68', 'yan.mikhelkis@gmail.com', '0000999900009999', '0632567801', 'yan1', '*****', 1, 1);
+insert into customer(name, surname, birthday, city, street, building, app, email, payment_info, phone, login, password, access_id, isactivated) 
+values('Nikita', 'Nikonov', '1992-01-04', 'Kiev', 'Urlovska', '6', '89', 'nikita.nikonov@gmail.com', '7777000077770000', '0664216783', 'nikita1', '*****', 1, 1);
+
+insert into dish(name, weight, price, description, is_kitchen_made, menusection_id, isactivated) 
+values('Caldeirada de peixe', '0.300', 5.00, 'fresh seafood soup', 1, 6, 1);
+insert into dish(name, weight, price, description, is_kitchen_made, menusection_id, isactivated) 
+values('Sardinhas assadas', '0.250', 8.00, 'BBQ sardines with smoke flavor', 1, 3, 1);
+insert into dish(name, weight, price, description, is_kitchen_made, menusection_id, isactivated) 
+values('Piri Piri', '0.050', 2.50, 'Traditional portuguese sauce', 1, 1, 1);
+insert into dish(name, weight, price, description, is_kitchen_made, menusection_id, isactivated) 
+values('Polvo a lagareiro', '0.300', 14.00, 'Baked octopus', 1, 8, 1);
+insert into dish(name, weight, price, description, is_kitchen_made, menusection_id, isactivated) 
+values('Bolo do caco', '0.100', 2.00, 'Bolo do caco is a bread that is circular like a cake and thus called bolo(cake in Portuguese)', 1, 2, 1);
+insert into dish(name, weight, price, description, is_kitchen_made, menusection_id, isactivated) 
+values('Vinho do Porto red sweet', '0.200', 6.00, 'Portuguese fortified wine produced exclusively in the Douro Valley in the northern provinces of Portugal', 1, 4, 1);
+insert into dish(name, weight, price, description, is_kitchen_made, menusection_id, isactivated) 
+values('Vinho do Porto red semi-dry', '0.200', 6.00, 'Portuguese fortified wine produced exclusively in the Douro Valley in the northern provinces of Portugal', 1, 4, 1);
+insert into dish(name, weight, price, description, is_kitchen_made, menusection_id, isactivated) 
+values('Vinho do Porto red dry', '0.200', 6.00, 'Portuguese fortified wine produced exclusively in the Douro Valley in the northern provinces of Portugal', 1, 4, 1);
+insert into dish(name, weight, price, description, is_kitchen_made, menusection_id, isactivated) 
+values('Vinho do Porto white dry', '0.200', 6.00, 'Portuguese fortified wine produced exclusively in the Douro Valley in the northern provinces of Portugal', 1, 4, 1);
+insert into dish(name, weight, price, description, is_kitchen_made, menusection_id, isactivated) 
+values('Vinho Verde green', '0.200', 6.00, 'It is a Portuguese wine that originated in the historic Minho province in the far north of the country', 1, 4, 1);
+insert into dish(name, weight, price, description, is_kitchen_made, menusection_id, isactivated) 
+values('Vinho Verde rose', '0.200', 6.00, 'It is a Portuguese wine that originated in the historic Minho province in the far north of the country', 1, 4, 1);
+insert into dish(name, weight, price, description, is_kitchen_made, menusection_id, isactivated) 
+values('Vinho da Madeira red extra dry', '0.200', 6.00, 'It is a fortified Portuguese wine made in the Madeira Islands', 1, 4, 1);
+insert into dish(name, weight, price, description, is_kitchen_made, menusection_id, isactivated) 
+values('Vinho da Madeira white dry', '0.200', 6.00, 'It is a fortified Portuguese wine made in the Madeira Islands', 1, 4, 1);
+insert into dish(name, weight, price, description, is_kitchen_made, menusection_id, isactivated) 
+values('Ameijoas a Bulhao Pato', '0.300', 5.00, 'Clamsc is a typical dish of Portuguese cuisine', 1, 2, 1);
+insert into dish(name, weight, price, description, is_kitchen_made, menusection_id, isactivated) 
+values('Pasteis de bacalhau', '0.300', 6.00, 'Codfish cakes named in Northern Portugal', 1, 2, 1);
+
+insert into STAFFROLE(role_name) values('Kitchen Member');
+insert into STAFFROLE(role_name) values('Delivery Service Member');
+insert into STAFFROLE(role_name) values('Business Analyst');
+insert into STAFFROLE(role_name) values('Restaurant Administrator');
+insert into STAFFROLE(role_name) values('WebSecurity Guard');
