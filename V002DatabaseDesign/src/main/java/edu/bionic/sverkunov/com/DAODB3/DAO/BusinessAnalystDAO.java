@@ -15,10 +15,9 @@ public class BusinessAnalystDAO implements BusinessAnalystDAOI {
 	@Override
 	public ReportResultBA getDailyRepor(EntityManager em, Timestamp from,
 			Timestamp until) {
-		TypedQuery<ReportResultBA> query = em
-				.createQuery(
-						"select new edu.bionic.sverkunov.com.DAODB3.classes.ReportResultBA("
-								+ ") from Orderr o, Orderrmenuitem omi, Dish d where omi.orderr_id = o.id AND omi.dish_id = d.id "
+		TypedQuery<ReportResultBA> query = em.createQuery(
+						"select new edu.bionic.sverkunov.com.DAODB3.classes.ReportResultBA(count(o.id), sum(omi.price))"
+						+ " from Orderr o, Orderrmenuitem omi, Dish d where omi.orderr_id = o.id AND omi.dish_id = d.id "
 								+ "AND omi.date_time between ?1 AND ?2",
 						ReportResultBA.class);
 		ReportResultBA result = null;
@@ -34,8 +33,8 @@ public class BusinessAnalystDAO implements BusinessAnalystDAOI {
 			Timestamp until, int menuId) {
 		TypedQuery<ReportResultBA> query = em
 				.createQuery(
-						"select new edu.bionic.sverkunov.com.DAODB3.classes.ReportResultBA("
-								+ ") from Orderr o, Orderrmenuitem omi, Dish d where d.menusection_id = ?1 AND omi.orderr_id = o.id AND omi.dish_id = d.id "
+						"select new edu.bionic.sverkunov.com.DAODB3.classes.ReportResultBA(count(o.id), sum(omi.price))"
+						+ " from Orderr o, Orderrmenuitem omi, Dish d where d.menusection_id = ?1 AND omi.orderr_id = o.id AND omi.dish_id = d.id "
 								+ "AND omi.date_time between ?2 AND ?3",
 						ReportResultBA.class);
 		ReportResultBA result = null;
