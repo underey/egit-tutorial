@@ -1,0 +1,92 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core">
+<h:head>
+	<title>Member registration</title>
+	<link href="./css/styles.css" rel="stylesheet" type="text/css" />
+</h:head>
+<h:body>
+	<h1 class="title">Registration form</h1>
+
+	<h:form>
+		<div>
+			<h:panelGrid columns="1" styleClass="depoTable">
+
+				<h:outputText value="Name:"></h:outputText>
+				<h:inputText id="mName" value="#{mreg.name}" required="true"
+					requiredMessage="#{msgs.nameRequired}"
+					converterMessage="#{msgs.nameConverter}"
+					validatorMessage="#{msgs.nameRange}">
+					<f:validateLength minimum="2" maximum="15" />
+					<f:validateRegex pattern="[a-zA-Z]+"></f:validateRegex>
+				</h:inputText>
+				<h:message for="mName" style="color:red" />
+				<h:outputText value="Surname:"></h:outputText>
+				<h:inputText id="mSurname" value="#{mreg.surname}" required="true"
+					requiredMessage="#{msgs.surnameRequired}"
+					converterMessage="#{msgs.surnameConverter}"
+					validatorMessage="#{msgs.surnameRange}">
+					<f:validateLength minimum="2" maximum="15" />
+					<f:validateRegex pattern="[a-zA-Z]+"></f:validateRegex>
+				</h:inputText>
+				<h:message for="mSurname" style="color:red" />
+				<h:outputText value="Email:"></h:outputText>
+				<h:inputText id="mEmail" value="#{mreg.email}" required="true"
+					requiredMessage="#{msgs.emailRequired}"
+					converterMessage="#{msgs.emailConverter}"
+					validatorMessage="#{msgs.emailRange}">
+					<f:ajax event="keyup" render="availableE"></f:ajax>
+					<f:validateLength minimum="6"></f:validateLength>
+					<f:validateRegex
+						pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$"></f:validateRegex>
+				</h:inputText>
+				<h:outputText value="#{mreg.availableMail}" id="availableE"/>
+				<h:message for="mEmail" style="color:red" />
+				<h:outputText value="Login:"></h:outputText>
+				<h:inputText id="mLogin" value="#{mreg.login}" required="true"
+					requiredMessage="#{msgs.loginRequired}"
+					converterMessage="#{msgs.loginConverter}"
+					validatorMessage="#{msgs.loginRange}">
+					<f:validateRegex pattern="(([a-zA-Z0-9_.-]).{5,12})"></f:validateRegex>
+				</h:inputText>
+				<h:message for="mLogin" style="color:red" />
+				<h:outputText value="Create a password"></h:outputText>
+				<h:inputSecret id="mPassword" value="#{mreg.password}"
+					required="true" requiredMessage="#{msgs.passwordRequired}"
+					validatorMessage="#{msgs.passwordRange}">
+					<f:validateRegex pattern="((?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,20})" />
+				</h:inputSecret>
+				<h:message for="mPassword" style="color:red" />
+				<h:outputText value="Confirm your password"></h:outputText>
+				<h:inputSecret id="mPasswordAgain" value="#{mreg.passwordAgain}"
+					required="true" requiredMessage="#{msgs.passwordRequired}"
+					validatorMessage="#{msgs.passwordRange}">
+					<f:validateRegex pattern="((?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,20})" />
+				</h:inputSecret>
+				<h:message for="mPasswordAgain" style="color:red" />
+				<h:outputText value="Activation:"></h:outputText>
+				<h:selectOneRadio id="mActivation" value="#{mreg.isactivated}"
+					required="true" requiredMessage="#{msgs.activationRequired}">
+					<f:selectItem itemValue="true" itemLabel="Yes" />
+					<f:selectItem itemValue="false" itemLabel="No" />
+				</h:selectOneRadio>
+				<h:message for="mActivation" style="color:red" />
+				<h:outputText value="Role:"></h:outputText>
+				<h:selectOneMenu id="mStaffrole" value="#{mreg.staffrole}" 
+					required="true" requiredMessage="#{msgs.staffroleRequired}">
+					<f:selectItem itemValue="200" itemLabel="Kitchen" />
+					<f:selectItem itemValue="300" itemLabel="Delivery" />
+					<f:selectItem itemValue="400" itemLabel="Restaurant admin" />
+					<f:selectItem itemValue="500" itemLabel="Business analyst" />
+					<f:selectItem itemValue="1000" itemLabel="WebSequrity guard" />
+				</h:selectOneMenu>
+				<h:message for="mStaffrole" style="color:red" />
+			</h:panelGrid>
+			<h:commandButton value="Submit" action="sucmemreg"></h:commandButton>
+		</div>
+	</h:form>
+
+</h:body>
+</html>

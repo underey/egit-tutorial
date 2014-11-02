@@ -84,7 +84,7 @@ public class WebSecurityGuardDAOtest {
 			List<Customer> df = guardDAO.getAllCustomers(em);
 
 			int ans = df.size();
-			assertEquals(4, ans);
+			assertEquals(3, ans);
 		} finally {
 			em.close();
 		}

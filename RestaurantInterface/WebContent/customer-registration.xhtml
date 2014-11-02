@@ -1,0 +1,124 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core">
+<h:head>
+	<title>Customer registration</title>
+	<link href="./css/style.css" rel="stylesheet" type="text/css" />
+</h:head>
+<h:body>
+	<h1 class="title">Registration form</h1>
+	<h:form>
+		<div>
+			<h:panelGrid columns="1" styleClass="depoTable">
+
+				<h:outputText value="Name:"></h:outputText>
+				<h:inputText id="cName" value="#{creg.name}" required="true"
+					requiredMessage="#{msgs.nameRequired}"
+					converterMessage="#{msgs.nameConverter}"
+					validatorMessage="#{msgs.nameRange}">
+					<f:validateLength minimum="2" maximum="15" />
+					<f:validateRegex pattern="[a-zA-Z]+"></f:validateRegex>
+				</h:inputText>
+				<h:message for="cName" style="color:red" />
+				<h:outputText value="Surname:"></h:outputText>
+				<h:inputText id="cSurname" value="#{creg.surname}" required="true"
+					requiredMessage="#{msgs.surnameRequired}"
+					converterMessage="#{msgs.surnameConverter}"
+					validatorMessage="#{msgs.surnameRange}">
+					<f:validateLength minimum="2" maximum="15" />
+					<f:validateRegex pattern="[a-zA-Z]+"></f:validateRegex>
+				</h:inputText>
+				<h:message for="cSurname" style="color:red" />
+				<h:outputText value="Birthday:"></h:outputText>
+				<h:inputText id="cBirthday" value="#{creg.birthday}" required="true"
+					requiredMessage="#{msgs.birthdayRequired}"
+					converterMessage="#{msgs.birthdayConverter}">
+					<f:convertDateTime pattern="dd.mm.yyyy" />
+				</h:inputText>
+				<h:message for="cBirthday" style="color:red" />
+				<h:outputText value="City:"></h:outputText>
+				<h:inputText id="cCity" value="#{creg.city}" required="true"
+					requiredMessage="#{msgs.cityRequired}"
+					converterMessage="#{msgs.cityConverter}">
+					<f:validateLength minimum="3" maximum="15" />
+					<f:validateRegex pattern="[a-zA-Z]+"></f:validateRegex>
+				</h:inputText>
+				<h:message for="cCity" style="color:red" />
+				<h:outputText value="Street:"></h:outputText>
+				<h:inputText id="cStreet" value="#{creg.street}"
+					converterMessage="#{msgs.streetConverter}">
+					<f:validateRegex pattern="(([a-zA-Z ]).{3,20})"></f:validateRegex>
+				</h:inputText>
+				<h:message for="cStreet" style="color:red" />
+				<h:outputText value="Building:"></h:outputText>
+				<h:inputText id="cBuilding" value="#{creg.building}"
+					converterMessage="#{msgs.buildingConverter}">
+					<f:validateRegex pattern="(([a-zA-Z0-9]).{1,5})"></f:validateRegex>
+				</h:inputText>
+				<h:message for="cBuilding" style="color:red" />
+				<h:outputText value="App:"></h:outputText>
+				<h:inputText id="cApp" value="#{creg.app}"
+					converterMessage="#{msgs.appConverter}">
+					<f:validateRegex pattern="(([a-zA-Z0-9/]).{1,5})"></f:validateRegex>
+				</h:inputText>
+				<h:message for="cApp" style="color:red" />
+				<h:outputText value="Payment information:"></h:outputText>
+				<h:inputText id="cPayment" value="#{creg.payment}"
+					converterMessage="#{msgs.paymentConverter}"
+					validatorMessage="#{msgs.paymentRange}">
+					<f:validateLength minimum="16" maximum="16" />
+					<f:validateRegex pattern="[0-9]+"></f:validateRegex>
+				</h:inputText>
+				<h:message for="cPayment" style="color:red" />
+				<h:outputText value="Phone number:"></h:outputText>
+				<h:inputText id="cPhone" value="#{creg.phone}" size="12"
+					required="true" requiredMessage="#{msgs.phoneRequired}"
+					converterMessage="#{msgs.phoneConverter}"
+					validatorMessage="#{msgs.phoneRange}">
+					<f:validateLength minimum="12" maximum="12" />
+					<f:validateRegex pattern="[0-9-]+"></f:validateRegex>
+				</h:inputText>
+				<h:outputText value="#{msgs.phoneEx}"/>
+				<h:message for="cPhone" style="color:red" />
+				<h:outputText value="Email:"></h:outputText>
+				<h:inputText id="cEmail" value="#{creg.email}" required="true"
+					requiredMessage="#{msgs.emailRequired}"
+					converterMessage="#{msgs.emailConverter}"
+					validatorMessage="#{msgs.emailRange}">
+					<f:ajax event="keyup" render="availableE"></f:ajax>
+					<f:validateLength minimum="6"></f:validateLength>
+					<f:validateRegex
+						pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$"></f:validateRegex>
+				</h:inputText>
+				<h:outputText value="#{creg.availableMail}" id="availableE"/>
+				<h:message for="cEmail" style="color:red" />
+				<h:outputText value="Login:"></h:outputText>
+				<h:inputText id="cLogin" value="#{creg.login}" required="true"
+					requiredMessage="#{msgs.loginRequired}"
+					converterMessage="#{msgs.loginConverter}"
+					validatorMessage="#{msgs.loginRange}">
+					<f:validateRegex pattern="(([a-zA-Z0-9_.-]).{5,12})"></f:validateRegex>
+				</h:inputText>
+				<h:message for="cLogin" style="color:red" />
+				<h:outputText value="Create a password"></h:outputText>
+				<h:inputSecret id="cPassword" value="#{creg.password}"
+					required="true" requiredMessage="#{msgs.passwordRequired}"
+					validatorMessage="#{msgs.passwordRange}">
+					<f:validateRegex pattern="((?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,20})" />
+				</h:inputSecret>
+				<h:message for="cPassword" style="color:red" />
+				<h:outputText value="Confirm your password"></h:outputText>
+				<h:inputSecret id="cPasswordAgain" value="#{creg.passwordAgain}"
+					required="true" requiredMessage="#{msgs.passwordRequired}"
+					validatorMessage="#{msgs.passwordRange}">
+					<f:validateRegex pattern="((?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,20})" />
+				</h:inputSecret>
+				<h:message for="cPasswordAgain" style="color:red" />
+			</h:panelGrid>
+			<h:commandButton value="Submit" action="succustreg"></h:commandButton>
+		</div>
+	</h:form>
+</h:body>
+</html>
